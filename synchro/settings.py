@@ -6,7 +6,14 @@ except ImportError:
     apps.ready = True
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.db.models.loading import get_app, get_models, get_model, load_app
+try:
+    from django.apps import apps
+    get_model = apps.get_model
+    get_models = apps.get_models
+    get_app = apps.get_app
+    load_app = apps.load_app
+except ImportError:    
+    from django.db.models.loading import get_app, get_models, get_model, load_app
 
 
 def get_all_models(app):
